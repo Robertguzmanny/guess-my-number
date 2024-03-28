@@ -18,8 +18,6 @@ Before you begin, ensure you have met the following requirements:
    ```sh
    git clone https://github.com/your-username/guess-my-number.git
 
-# Guess My Number
-
 ## Technology Used
 - **React**: A JavaScript library for building user interfaces.
 - **CSS**: For styling the application.
