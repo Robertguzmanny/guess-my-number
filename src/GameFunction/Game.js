@@ -18,7 +18,7 @@ function Game() {
   const [showModal, setShowModal] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [currentImage, setCurrentImage] = useState(Thinker);
-  const [isCorrectGuess, setIsCorrectGuess] = useState(false); // New state for correct guess
+  const [isCorrectGuess, setIsCorrectGuess] = useState(false);
 
   useEffect(() => {
     console.log("Winning number:", winningNumber);
@@ -26,41 +26,38 @@ function Game() {
 
   const checkGuess = () => {
     const numGuess = parseInt(guess, 10);
+    setIsCorrectGuess(false); // Ensure the guess is reset each time
+
     if (!numGuess || numGuess < 1 || numGuess > 100) {
       setMessage("Enter a number between 1 and 100");
       setCurrentImage(Wrong);
-      setIsCorrectGuess(false); // Reset correct guess state
-      return;
-    }
-    if (guessArray.includes(numGuess)) {
+    } else if (guessArray.includes(numGuess)) {
       setMessage("You already guessed that number!");
       setCurrentImage(Wrong);
-      setIsCorrectGuess(false); // Reset correct guess state
-      return;
-    }
-
-    setGuessArray([...guessArray, numGuess]);
-    setGuess("");
-
-    if (numGuess === winningNumber) {
-      setScore(score + 1);
-      setMessage(`You guessed it! My number was ${winningNumber}`);
-      setCurrentImage(Win);
-      setIsCorrectGuess(true); // Set correct guess state
-      setWinningNumber(Math.floor(Math.random() * 101) + 1);
-      if (score >= highScore) {
-        setHighScore(score + 1);
-      }
     } else {
-      setAttempt(attempt - 1);
-      setMessage(numGuess < winningNumber ? "Too low!" : "Too high!");
-      setCurrentImage(Wrong);
-      setIsCorrectGuess(false); // Reset correct guess state
-      if (attempt <= 1) {
-        setGameOver(true);
-        setMessage(`Game Over! The number was ${winningNumber}`);
-        setCurrentImage(GameOver);
-        setAttempt(0);
+      setGuessArray(oldArray => [...oldArray, numGuess]);
+      setGuess("");
+
+      if (numGuess === winningNumber) {
+        setScore(score + 1);
+        setMessage(`Correct! The number was ${winningNumber}`);
+        setCurrentImage(Win);
+        setIsCorrectGuess(true);
+
+        // Optionally start a new round
+        setWinningNumber(Math.floor(Math.random() * 101) + 1);
+        setGuessArray([]);
+        setAttempt(10);
+      } else {
+        setMessage(numGuess < winningNumber ? "Too low!" : "Too high!");
+        setCurrentImage(Wrong);
+        setAttempt(attempt - 1);
+
+        if (attempt - 1 <= 0) {
+          setGameOver(true);
+          setMessage(`Game Over! The number was ${winningNumber}`);
+          setCurrentImage(GameOver);
+        }
       }
     }
   };
@@ -71,7 +68,7 @@ function Game() {
     setAttempt(10);
     setScore(0);
     setGameOver(false);
-    setIsCorrectGuess(false); // Reset correct guess state
+    setIsCorrectGuess(false);
     setWinningNumber(Math.floor(Math.random() * 101) + 1);
     setCurrentImage(Thinker);
   };
@@ -86,10 +83,7 @@ function Game() {
             <button className="task-button" onClick={() => setShowModal(false)}>
               Yes
             </button>
-            <button
-              className="task-button"
-              onClick={() => window.location.reload()}
-            >
+            <button className="task-button" onClick={() => window.location.reload()}>
               No
             </button>
           </div>
@@ -107,7 +101,7 @@ function Game() {
         <p>High Score: {highScore}</p>
       </div>
 
-      <div className="game-window">
+      <div className={`game-window ${isCorrectGuess ? 'correct' : ''}`}>
         <img src={currentImage} alt="Game Status" className="game-image" />
         <input
           className="input"
@@ -133,8 +127,6 @@ function Game() {
       <button className="reset-button" onClick={resetGame}>
         Reset
       </button>
-
-      
     </div>
   );
 }
