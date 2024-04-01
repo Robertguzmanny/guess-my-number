@@ -16,6 +16,7 @@ body {
     margin-left:auto;
     margin-right:auto;
     border-radius: 5px;
+    margin-top: 3%;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .game-container-header {
@@ -36,28 +37,29 @@ body {
     height:100%;
 }
 
-.reset-button {
-    position: absolute; 
-    top: 10px; 
-    right: 10px; 
-    background-color: pink;
-    padding: 10px 20px; 
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer; 
-}
+
 
 .reset-button {
     display: block;
     float: right;
-    width:fit-content;
-    height:fit-content;
-    background-color:pink;
+    width: 150px;
+    height: 60px;
+    background-color: pink;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+    line-height: 60px;
+    transition: transform 0.2s, background-color 0.2s; /* Smooth transition for transform and background color */
 }
+
+.reset-button:active {
+    transform: scale(0.95); /* Slightly reduce the button size when clicked */
+    background-color: #ff99aa; /* Lighten the background color on click */
+}
+
+
 .game-window {
     background-color:lightsalmon;
     min-height: fit-content;
@@ -92,18 +94,24 @@ body {
 .check-button {
     display: block;
     float: right;
-    width:fit-content;
-    height:fit-content;
-    background-color:teal;
-   ;
-    border:3px solid green;
+    width: fit-content;
+    height: fit-content;
+    background-color: teal;
     border: none;
     border-radius: 25px;
-    padding:2%;
+    padding: 2%;
     margin: 3%;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s; /* Smooth transition for transform and background color */
 }
+
+.check-button:active {
+    transform: scale(0.95); /* Slightly reduce the button size when clicked */
+    background-color: #5f9ea0; /* Change to a different shade of teal when clicked */
+}
+
 .game-window-footer {
     color:white;
 }
